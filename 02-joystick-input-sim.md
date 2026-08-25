@@ -29,6 +29,14 @@ There are many files and folders in the project.
 The most interesting files will be within the `src/main/java/first/robot folder`.
 For this session, we will be using `Robot.java` and `opmode/MyTeleop.java`.
 
+Before we get started, initialize a git repository in the directory.
+Open the source control tab on the left.
+Select to initialize a git repo.
+Add all files
+
+Write a message: "Empty starter project"
+Select 'Commit'
+
 ## Robot Program Structure
 
 OpModes are new in 2027 WPILib.
@@ -175,3 +183,12 @@ Now that the OpMode is active, you can find the `Button` telemetry in the Networ
 Click `x` (assuming a keyboard input) and see if the telemetry changes.
 Also watch the boxes on the Joysticks window to see if the inputs light up.
 
+## Check in the code
+
+Select the Source Control button on the left bar.
+You should see a list of all modified files.
+Selecting any one of those files will open up a diff view showing the FROM/TO code changes.
+
+Add all files.
+Add a message describing what you changed.
+Commit the code.
