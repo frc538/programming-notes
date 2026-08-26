@@ -7,14 +7,15 @@ Workshops are held each year with special-topics for the team to gain new capabi
 ## 2026 Lessons & Workshops
 
 1. Coding orientation
-2. Joysticks and Motors
-3. Op Modes, Telemetry, Faults/Alerts
-4. Commands v3
-5. Swerve drive tuning
-6. Data flow, threads, scheduling
-7. Simulations
-8. Controls: Feedback, Feedforward, PID
-9. Controls: Inner/outer loops, Input shaping, gain scheduling
+2. Starter project & joysticks 
+3. Adding Motor Control
+4. Op Modes, Telemetry, Faults/Alerts
+5. Commands v3
+6. Swerve drive tuning
+7. Data flow, threads, scheduling
+8. Simulations
+9. Controls: Feedback, Feedforward, PID
+10. Controls: Inner/outer loops, Input shaping, gain scheduling
 
 ## Workshops
 
