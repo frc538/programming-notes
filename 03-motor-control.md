@@ -170,7 +170,11 @@ This configuration sets many of the common items that we will need to configure 
       .withClosedLoopGeneral(new ClosedLoopGeneralConfigs()
         .withContinuousWrap(true))
       .withFeedback(new FeedbackConfigs()
-        .withFeedbackSensorSource(FeedbackSensorSourceValue.RotorSensor));
+        .withFeedbackSensorSource(FeedbackSensorSourceValue.RotorSensor))
+      .withSlot0(new Slot0Configs()
+        .withKP(0.0)
+        .withKI(0.0)
+        .withKD(0.0));
 
     otherMotor.getConfigurator().apply(otherMotorConfig);
 ```
