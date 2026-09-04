@@ -110,8 +110,92 @@ The OpMode will show up in the driver station automatically in the dropdown when
 
 ## Telemetry 
 
+### Background
+
 Telemetry allow us to publish data from the robot to a dashboard or recorded file.
 [WPILib Telemetry documentation](https://github.com/wpilibsuite/allwpilib/blob/main/telemetry/doc/telemetry.md) gives insight into the design of the Telemetry API.
 
+### Add a Counter to UtilityTest
+
+We will add a counter that increments when the UtilityTest mode is enabled, and resets to zero any time the op mode is not enabled.
+First, we add some variables inside the UtilityTest class:
+```java
+    private Robot robot;
+    private final TelemetryTable telemetry = Telemetry.getTable("UtilityTest");
+    private int counter = 0;
+```
+
+You will need to configure imports for `Robot`, `TelemetryTable`, and `Telemetry`.
+```java
+import org.wpilib.telemetry.Telemetry;
+import org.wpilib.telemetry.TelemetryTable;
+
+import first.robot.Robot;
+```
+
+Create a class constructor to initialize telemetry any time the OpMode is entered.
+```java
+    public UtilityTest(Robot robot) {
+        this.robot = robot;
+
+        telemetry.log("counter", counter);
+    }
+```
+
+Create an `end` and `periodic` functions, including an `@Override` decorator over each function.
+The `@Override` keyword informs the compiler that the function is intended to override a function that is inherited.
+If you make a typo in the function name, the use of `@Override` will cause the compiler to report an error.
+
+The `end` function will set counter to 0, and the `periodic` function will increment it each time it is called.
+
+```java
+    @Override
+    public void end() {
+        counter = 0;
+
+        telemetry.log("counter", counter);
+    }
+
+    @Override
+    public void periodic() {
+        counter = counter + 1;
+
+        telemetry.log("counter", counter);
+    }
+```
+
+You may notice that we had to repeat the `telemetry.log()` call multiple times.
+While that is not a big deal with a single variable, it might end up with a lot of duplicate lines.
+
+We will move that log call to a helper function:
+```java
+    private void logTelemetry() {
+        telemetry.log("counter", counter);
+    }
+```
+
+Replace the other 3 locations where `telemetry.log()` is called with a call to `logTelemetry()`.
+
+Simulate the code.
+This time, we'll open up AdvantageScope to see the signal.
+First, connect to the simulator.
+
+<a img="https://i.imgur.com/NHWyxw7.png" />
+
+If AdvantageScope sees the simulation data, the x axis will start growing.
+Before the UtilityTest is selected, UtilityTest will not show up in the signal pick list.
+Switch to Utility mode, and select UtilityTest.
+
+AdvantageScope will show Telemetry->UtilityTest->counter in the signal pick list when you expand it.
+
+<a img="https://i.imgur.com/CVhCeUY.png" />
+
+Drag the counter signal to the 'Left Axis" area.
+
+Enable the DriverStation.
+The counter will start counting up, looking like a ramp on the plot.
+Disable the DriverStation, the counter will reset to 0.
+
+<a img="https://i.imgur.com/C4lBkW5.png" />
 
 ## Faults & Alerts
