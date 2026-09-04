@@ -199,3 +199,110 @@ Disable the DriverStation, the counter will reset to 0.
 <a img="https://i.imgur.com/C4lBkW5.png" />
 
 ## Faults & Alerts
+
+### Background
+
+When testing and operating the robot, we will often identify scenarios where a motor controller or other sensor tells us something is wrong.
+For example, in the 2026 Rebuilt game, the spindexer would jam, causing a spike in current and RPM to drop to near zero.
+We need to implement logic that detects those conditions, reports them to the user, and often we will implement code to take autonomous action to recover.
+
+A fault is a condition that may be detected.
+An alert is an indicator to the operator that some failure condition is present.
+
+With real-time systems like we see in FRC, failure conditions may be transient.
+Adding a counter to provide persistence is a good way for the robot code to tolerate transients without overreaction
+
+Alerts are provided with 3 levels:
+- Low
+  - An issue that is unexpected, but not likely to impact performance
+- Medium
+  - Performance degraded, but does not require immediate reaction
+- High
+  - Major impact to the robot, take immediate action
+
+Common types of faults:
+- Power
+  - High: Battery low
+  - Medium: Battery below match start level
+  - Medium: Excessive usage
+- Communications
+  - High: CAN IDs missing
+  - High: Joysticks missing
+- Performance
+  - Medium: Task Overruns
+- Navigation
+  - Medium: Large unrealistic motion detected
+- Drive
+  - Medium: Wheel speed persistently below commanded
+- Mechanism
+  - High: Motor stall detected
+
+### Implementing a counter based fault/alert
+
+We will modify the UtilityTest code to generate 3 levels of Alerts with persistence.
+Add a Joystick to the Robot.Java file:
+```java
+public Joystick joystick = new Joystick(0);
+```
+
+In UtilityTest.java, import Alert and AlertLevel:
+```java
+import org.wpilib.util.Alert;
+import org.wpilib.util.Alert.Level;
+```
+
+Create 3 Alerts:
+```java
+    Alert lowAlert = new Alert("UtilityTest/lowAlert","low",Level.LOW);
+    Alert mediumAlert = new Alert("UtilityTest/mediumAlert","medium",Level.MEDIUM);
+    Alert highAlert = new Alert("UtilityTest/highAlert","high",Level.HIGH);
+```
+
+We'll create a boolean to represent the fault, and rename the counter to represent the fault.
+Go ahead and rename all `counter` values to `joystickFaultCounter`.
+```java
+    private boolean joystickFault = false;
+    private int joystickFaultCounter = 0;
+```
+
+Log everything of interest in `logTelemetry()`:
+```java
+    private void logTelemetry() {
+        telemetry.log("joystickFault", joystickFault);
+        telemetry.log("joystickFaultCounter", joystickFaultCounter);
+        telemetry.log("lowAlert",lowAlert.get());
+        telemetry.log("mediumAlert",mediumAlert.get());
+        telemetry.log("highAlert",highAlert.get());
+    }
+```
+
+Set the fault and counter to the reset state in the `end()` function:
+```java
+    joystickFault = false;
+    joystickFaultCounter = 0;
+```
+
+Now we add fault detection.
+In this case, we're just interpreting button 0 being set as a failure condition.
+```java
+    void periodic() {
+       // Counter increment when the button is pressed
+        if (robot.joystick.getRawButton(0)) {
+            joystickFault = true;
+            joystickFaultCounter += 1;
+        }
+        else {
+            joystickFault = false;
+            joystickFaultCounter = 0;
+        }
+	 ...
+```
+
+The alerts may be set or unset based on the counter value by passing a boolean into the `set()` function.
+Example:
+```java
+    lowAlert.set(true);
+```
+
+Write code to set the lowAlert after 5 seconds, mediumAlert after 10 seconds, and highAlert after 15 seconds of the joystick button being pressed.
+Simulate the code, and view the results in AdvantageScope.
