@@ -63,8 +63,8 @@ Once you have an account, you can be added to the team.
 
 If you wish to install software on your computer, these are the components suggested:
 - [GitHub Desktop](https://desktop.github.com) (for users not already experienced with the `git` command-line tool)
-- [First Driver Station](https://github.com/wpilibsuite/FirstDriverStation-Public/releases/tag/v2027.0.0-alpha-6) (Version 2027.0.0 Alpha 6)
-- [WPILib](https://github.com/wpilibsuite/allwpilib/releases/tag/v2027.0.0-alpha-6) (Version 2027.0.0 Alpha 6)
+- [First Driver Station](https://github.com/wpilibsuite/FirstDriverStation-Public/releases/tag/v2027.0.0-alpha-7) (Version 2027.0.0 Alpha 7)
+- [WPILib](https://github.com/wpilibsuite/allwpilib/releases/tag/v2027.0.0-alpha-7) (Version 2027.0.0 Alpha 7)
 
 In addition, we reviewed two useful sources of information:
 - [WPILib Documentation](https://docs.wpilib.org/en/stable/index.html). A good first-stop if you are learning more about a topic in robot programming or control systems.
