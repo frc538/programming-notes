@@ -72,7 +72,8 @@ Mechanism controls will graduate to a teleop mode when:
 - a control button/axis map is coordinated with the team (drive team if available)
 
 Each op mode will be defined in an individual file.
-To create an OpMode, create a class that *implements* `OpMode`, and place one of the following decorators on the line before the class definition: `@Teleop`, `@Autonomous`, or `@Utility`.
+To create an OpMode, create a class that *implements* `PeriodicOpMode`, and place one of the following decorators on the line before the class definition: `@Teleop`, `@Autonomous`, or `@Utility`.
+There are other OpMode types besides `PeriodicOpMode` that might be used in other contexts.
 
 ### Implement a Utility OpMode
 
@@ -120,7 +121,7 @@ Telemetry allow us to publish data from the robot to a dashboard or recorded fil
 We will add a counter that increments when the UtilityTest mode is enabled, and resets to zero any time the op mode is not enabled.
 First, we add some variables inside the UtilityTest class:
 ```java
-    private Robot robot;
+    private final Robot robot;
     private final TelemetryTable telemetry = Telemetry.getTable("UtilityTest");
     private int counter = 0;
 ```
