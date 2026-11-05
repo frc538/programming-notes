@@ -11,11 +11,12 @@ Workshops are held each year with special-topics for the team to gain new capabi
 3. Adding Motor Control
 4. Op Modes, Telemetry, Faults/Alerts
 5. Commands v3
-6. Swerve drive tuning
-7. Data flow, threads, scheduling
-8. Simulations
-9. Controls: Feedback, Feedforward, PID
-10. Controls: Inner/outer loops, Input shaping, gain scheduling
+6. State Machines (with commands)
+7. Controls intro, control code from prior years, documentation
+8. Swerve drive tuning
+10. Simulations
+11. Controls: Feedback, Feedforward, PID
+12. Controls: Inner/outer loops, Input shaping, gain scheduling
 
 ## Workshops
 
